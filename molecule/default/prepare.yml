@@ -1,0 +1,15 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Bootstrap python2 to avoid gather_facts errors
+      raw: "{{ item }}"
+      loop:
+        - apt-get update
+        - apt-get install -y sudo
+        - apt-get -y install python
+    - name: Install sudo so we can become as gods
+      raw: "{{ item }}"
+      loop:
+        - apt-get install -y sudo

@@ -1,0 +1,17 @@
+---
+
+- name: Check if python3 is installed
+  shell: which python3
+  register: which_python3
+  ignore_errors: yes
+
+- name: Check if python3 is desired version
+  shell: 'python3 --version | cut -d" " -f 2'
+  register: found_python3_version
+  when: which_python3.rc == 0
+
+- import_tasks: install_deps.debian.yml
+  when: found_python3_version != python_version
+
+- import_tasks: install_python.yml
+  when: found_python3_version != python_version

@@ -1,0 +1,27 @@
+---
+- name: Untar source
+  unarchive:
+    src: https://www.python.org/ftp/python/{{ python_version }}/{{ python_src_filename }}.tgz
+    dest: /tmp
+    remote_src: yes
+
+- name: Configure build
+  shell: ./configure --enable-optimizations
+  args:
+    chdir: /tmp/{{ python_src_filename }}
+
+- name: Compile
+  shell: make -j{{ ansible_processor_vcpus }}
+  args:
+    chdir: /tmp/{{ python_src_filename }}
+
+- name: Install as python3
+  shell: make install
+  become: yes
+  args:
+    chdir: /tmp/{{ python_src_filename }}
+
+- name: Cleanup build dir
+  file:
+    state: absent
+    path: /tmp/Python-{{ python_version }}

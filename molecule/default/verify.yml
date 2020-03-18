@@ -1,0 +1,11 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Get python version
+      shell: 'python3 --version | cut -d" " -f 2'
+      register: found_python3_version
+
+    - name: Assert that python is expected version
+      assert:
+        that: found_python3_version.stdout == python_version
