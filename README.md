@@ -1,5 +1,6 @@
 Role Name
 =========
+[![Build Status](https://travis-ci.org/matthull/ansible-python.svg?branch=master)](https://travis-ci.org/matthull/ansible-python)
 
 A brief description of the role goes here.
 
